@@ -105,7 +105,7 @@ namespace EDDiscovery.UserControls
                 {
                     if ( bodies.ScanData != null && bodies.ScanData.BodyName != null && (checkBoxEDSM.Checked || !bodies.ScanData.IsEDSMBody))     // if check edsm, or not edsm body, with scandata
                     {
-                        dataGridViewEstimatedValues.Rows.Add(new object[] { bodies.ScanData.BodyName, bodies.ScanData.IsEDSMBody ? "EDSM" : "", bodies.ScanData.EstimatedValue });
+                        dataGridViewEstimatedValues.Rows.Add(new object[] { bodies.ScanData.BodyName, bodies.ScanData.PlanetClass, bodies.ScanData.IsEDSMBody ? "EDSM" : "", bodies.ScanData.EstimatedValue });
                     }
                 }
                 dataGridViewEstimatedValues.Sort(this.EstValue, ListSortDirection.Descending);
