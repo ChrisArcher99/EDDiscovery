@@ -37,23 +37,42 @@ namespace EliteDangerousCore.JournalEvents
 
                 foreach (JObject jo in route)
                 {
-                    routeents.Add(new NavRouteEntry
+                    var starsys = jo["StarSystem"];         // beta: address, 3.7 : StarSystem 
+                    var sysaddr = jo["SystemAddress"];      // beta: not present, 3.7 address
+                    var starpos = new EMK.LightGeometry.Vector3(
+                        jo["StarPos"][0].Float(),
+                        jo["StarPos"][1].Float(),
+                        jo["StarPos"][2].Float()
+                    );
+                    var starclass = jo["StarClass"].Str();
+
+                    if (sysaddr == null)                    // if no SystemAddress, its beta
                     {
-                        StarSystem = jo["StarSystem"].Long(),
-                        StarPos = new EMK.LightGeometry.Vector3(
-                            jo["StarPos"][0].Float(),
-                            jo["StarPos"][1].Float(),
-                            jo["StarPos"][2].Float()
-                        ),
-                        StarClass = jo["StarClass"].Str()
-                    });
+                        routeents.Add(new NavRouteEntry
+                        {
+                            SystemAddress = starsys.Long(), // yes the beta had it in there
+                            StarPos = starpos,
+                            StarClass = starclass
+                        });
+
+                    }
+                    else
+                    {
+                        routeents.Add(new NavRouteEntry     // 3.7 will have this
+                        {
+                            StarSystem = starsys.Str(),
+                            SystemAddress = sysaddr.Long(),
+                            StarPos = starpos,
+                            StarClass = starclass
+                        });
+                    }
                 }
 
                 Route = routeents.ToArray();
             }
         }
 
-        public NavRouteEntry[] Route { get; set; }
+        public NavRouteEntry[] Route { get; set; }      // check route is not null
 
         public bool ReadAdditionalFiles(string directory, bool inhistoryparse, ref JObject jo)
         {
@@ -75,13 +94,23 @@ namespace EliteDangerousCore.JournalEvents
 
         public override void FillInformation(out string info, out string detailed)
         {
-            info = "Nav Route";
-            detailed = $"{Route?.Length ?? 0} jumps";
+            detailed = info = "";
+            if ( Route != null )
+            {
+                foreach( var r in Route )
+                {
+                    string n = r.StarSystem ?? r.SystemAddress.ToStringInvariant();
+                    info = info.AppendPrePad(n, ", ");
+                    detailed = detailed.AppendPrePad(n + " @ " + r.StarPos.X.ToString("N1") + "," + r.StarPos.Y.ToString("N1") + "," + r.StarPos.Z.ToString("N1") + " " + r.StarClass, System.Environment.NewLine);
+                }
+                info = string.Format("{0} jumps: ".T(EDTx.BankAccountClass_InsuranceClaims), Route.Length) + info;
+            }
         }
 
         public class NavRouteEntry
         {
-            public long StarSystem { get; set; }
+            public string StarSystem { get; set; }
+            public long SystemAddress { get; set; }
             public EMK.LightGeometry.Vector3 StarPos { get; set; }
             public string StarClass { get; set; }
         }
