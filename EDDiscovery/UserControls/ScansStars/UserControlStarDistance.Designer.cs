@@ -68,6 +68,7 @@ namespace EDDiscovery.UserControls
             this.vScrollBarCustom2 = new ExtendedControls.ExtScrollBar();
             this.dataGridViewNearest = new System.Windows.Forms.DataGridView();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StarTypes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDistance = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVisited = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip.SuspendLayout();
@@ -308,6 +309,7 @@ namespace EDDiscovery.UserControls
             this.dataGridViewNearest.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewNearest.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colName,
+            this.StarTypes,
             this.colDistance,
             this.colVisited});
             this.dataGridViewNearest.ContextMenuStrip = this.contextMenuStrip;
@@ -345,6 +347,11 @@ namespace EDDiscovery.UserControls
             this.colName.MinimumWidth = 50;
             this.colName.Name = "colName";
             this.colName.ReadOnly = true;
+            // 
+            // StarTypes
+            // 
+            this.StarTypes.HeaderText = "Star Types";
+            this.StarTypes.Name = "StarTypes";
             // 
             // colDistance
             // 
@@ -386,9 +393,6 @@ namespace EDDiscovery.UserControls
         private ExtendedControls.ExtPanelDataGridViewScroll dataViewScrollerPanel2;
         private ExtendedControls.ExtScrollBar vScrollBarCustom2;
         private System.Windows.Forms.DataGridView dataGridViewNearest;
-        private DataGridViewTextBoxColumn colName;
-        private DataGridViewTextBoxColumn colDistance;
-        private DataGridViewTextBoxColumn colVisited;
         private System.Windows.Forms.Label labelExtMin;
         private ExtendedControls.NumberBoxDouble textMinRadius;
         private System.Windows.Forms.Label labelExtMax;
@@ -399,5 +403,9 @@ namespace EDDiscovery.UserControls
         private ToolStripMenuItem addToExpeditionToolStripMenuItem;
         private FlowLayoutPanel flowLayoutStarDistances;
         private ToolStripMenuItem viewSystemToolStripMenuItem;
+        private DataGridViewTextBoxColumn colName;
+        private DataGridViewTextBoxColumn StarTypes;
+        private DataGridViewTextBoxColumn colDistance;
+        private DataGridViewTextBoxColumn colVisited;
     }
 }
