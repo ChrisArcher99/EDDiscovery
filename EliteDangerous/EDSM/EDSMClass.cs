@@ -759,12 +759,12 @@ namespace EliteDangerousCore.EDSM
                     // System.Threading.Thread.Sleep(2000); //debug - delay to show its happening 
                    // System.Diagnostics.Debug.WriteLine("EDSM Cache check " + sys.EDSMID + " " + sys.SystemAddress + " " + sys.Name);
 
-                    if (DictEDSMBodies != null && sys.EDSMID > 0 && DictEDSMBodies.ContainsKey(sys.EDSMID))  // Cache EDSM bidies during run of EDD.
+                    if (DictEDSMBodies != null && sys.EDSMID > 0 && DictEDSMBodies.ContainsKey(sys.EDSMID) && DictEDSMBodies[sys.EDSMID] != null)  // Cache EDSM bidies during run of EDD.
                     {
                         System.Diagnostics.Debug.WriteLine("Found sys.EDSMID " + sys.EDSMID + " Lookup bodies from cache " + DictEDSMBodies[sys.EDSMID].Count);
                         return new Tuple<List<JournalScan>, bool>(DictEDSMBodies[sys.EDSMID], true);
                     }
-                    else if (DictEDSMBodiesByID64 != null && sys.SystemAddress != null && sys.SystemAddress > 0 && DictEDSMBodiesByID64.ContainsKey(sys.SystemAddress.Value))
+                    else if (DictEDSMBodiesByID64 != null && sys.SystemAddress != null && sys.SystemAddress > 0 && DictEDSMBodiesByID64.ContainsKey(sys.SystemAddress.Value) && DictEDSMBodiesByID64[sys.SystemAddress.Value] != null)
                     {
                         System.Diagnostics.Debug.WriteLine("Found sys.EDSMID64 " + sys.SystemAddress.Value + " Lookup bodies from cache " + DictEDSMBodiesByID64[sys.SystemAddress.Value].Count);
                         return new Tuple<List<JournalScan>, bool>(DictEDSMBodiesByID64[sys.SystemAddress.Value], true);
