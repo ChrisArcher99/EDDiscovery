@@ -16,6 +16,8 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Forms;
+using EDDiscovery.Controls;
 using EliteDangerousCore;
 
 
@@ -43,6 +45,11 @@ namespace EDDiscovery.UserControls
 
             checkBoxEDSM.Checked = EliteDangerousCore.DB.UserDatabase.Instance.GetSettingBool(DbEDSM, false);
             checkBoxEDSM.CheckedChanged += CheckBoxEDSM_CheckedChanged;
+
+            dataGridViewEstimatedValues.MakeDoubleBuffered();
+            dataGridViewEstimatedValues.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dataGridViewEstimatedValues.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;     // NEW! appears to work https://msdn.microsoft.com/en-us/library/74b2wakt(v=vs.110).aspx
+            dataGridViewEstimatedValues.DefaultCellStyle.Padding = new System.Windows.Forms.Padding(0, 1, 0, 1);
 
         }
 
@@ -108,7 +115,7 @@ namespace EDDiscovery.UserControls
                 {
                     if ( bodies.ScanData != null && bodies.ScanData.BodyName != null && (checkBoxEDSM.Checked || !bodies.ScanData.IsEDSMBody))     // if check edsm, or not edsm body, with scandata
                     {
-                         dataGridViewEstimatedValues.Rows.Add(new object[] { bodies.ScanData.BodyName, bodies.ScanData.PlanetClass, bodies.ScanData.IsEDSMBody ? "EDSM" : "", (bodies.IsMapped? Icons.Controls.Scan_Bodies_Mapped : null), bodies.ScanData.EstimatedValue });
+                         dataGridViewEstimatedValues.Rows.Add(new object[] { bodies.ScanData.BodyName, bodies.ScanData.PlanetClass, bodies.ScanData.IsEDSMBody ? "EDSM" : "", (bodies.IsMapped ? Icons.Controls.Scan_Bodies_Mapped : null), (bodies.ScanData.WasMapped == true? Icons.Controls.Scan_Bodies_Mapped : null), (bodies.ScanData.WasDiscovered == true ? Icons.Controls.Scan_DisplaySystemAlways : null), bodies.ScanData.EstimatedValue });
                     }
                 }
                 dataGridViewEstimatedValues.Sort(this.EstValue, ListSortDirection.Descending);
