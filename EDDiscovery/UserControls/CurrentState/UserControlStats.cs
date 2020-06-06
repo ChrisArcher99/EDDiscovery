@@ -1077,8 +1077,7 @@ namespace EDDiscovery.UserControls
                 datagrid.Rows[rowIndex].Cells[0].Value = title;
                 for (int ii = 0; ii < data.Length; ii++)
                     datagrid.Rows[rowIndex].Cells[ii + 1].Value = data[ii];
-            }
-           
+            }          
         }
 
 
